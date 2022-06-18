@@ -15,7 +15,7 @@ type API struct {
 
 func NewAPI() API {
 	return API{
-		host:   GITCOIN_PASSPORT_CERAMIC_ENDPOINT,
+		host:   MAINNET_COMMUNITY_CERAMIC_ENDPOINT,
 		scheme: "https",
 		root:   "",
 	}

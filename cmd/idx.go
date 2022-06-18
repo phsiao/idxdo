@@ -7,34 +7,62 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/phsiao/idxdo/pkg/idx"
 	"github.com/spf13/cobra"
 )
 
 // idxCmd represents the idx command
 var idxCmd = &cobra.Command{
 	Use:   "idx",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Inspect and validate your IDX document",
+	Long: `
+IDX is the directory that identity records such as GitCoin Passport are stored,
+and you need it to find your Passport and other identity documents, so you
+should be able to inspect and validate your IDX document.
+	
+Subcommands in this category help you inspect and validate your IDX document.`,
+}
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("idx called")
+// idxIdCmd represents the 'idx id' command
+var idxIdCmd = &cobra.Command{
+	Use:   "id",
+	Short: "Get your IDX document StreamID",
+	Long: `
+Each Ceramic Stream has a StreamID, and the StreamID is computed from your
+DID such as pkh.
+
+The output is your StreamID.`,
+}
+
+var (
+	pkhChainId uint
+	pkhAccount string
+)
+
+// idxIdPkhCmd represents the 'idx id pkh' command
+var idxIdPkhCmd = &cobra.Command{
+	Use:   "pkh",
+	Short: "Get your IDX document StreamID using PKH",
+	Long: `
+Each Ceramic Stream has a StreamID, and the StreamID is computed from your
+DID such as pkh.
+
+The output is your StreamID.`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if pkhAccount == "" {
+			return fmt.Errorf("please provides an account using --account")
+		}
+		streamid := idx.StreamIDFromPKH(pkhChainId, pkhAccount)
+		fmt.Println(streamid)
+		return nil
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(idxCmd)
+	idxCmd.AddCommand(idxIdCmd)
+	idxIdCmd.AddCommand(idxIdPkhCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// idxCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// idxCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	idxIdPkhCmd.Flags().UintVar(&pkhChainId, "chainid", 1, "EIP-155 Chain ID to use for your identity")
+	idxIdPkhCmd.Flags().StringVar(&pkhAccount, "account", "", "Account to use for your identity")
 }

@@ -12,7 +12,7 @@ var cidCmd = &cobra.Command{
 	Use:   "cid",
 	Short: "cid command category",
 	Long: `
-A family of commands to help interacting with cid
+Subcommands in this category help interacting with cid.
 `,
 }
 

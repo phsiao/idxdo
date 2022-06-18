@@ -59,9 +59,11 @@ executing
 idxdo idx state <your StreamID from previous step>
 ```
 
-The `content` secion of the output json is the list of your identity documents.
-The key `kjzl6cwe1jw148h1e14jb5fkf55xmqhmyorp29r9cq356c7ou74ulowf8czjlzs`
-represents GitCoin passport documents that is associated with this identity.
+The `content` secion of the output json is the list of your identity documents
+by their key/value pairs. The key
+`kjzl6cwe1jw148h1e14jb5fkf55xmqhmyorp29r9cq356c7ou74ulowf8czjlzs` is used to
+indicate GitCoin Passport, and the value represents GitCoin Passport document
+that is associated with this identity.
 
 #### Show your identity document
 

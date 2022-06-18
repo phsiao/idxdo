@@ -51,7 +51,7 @@ type CeramicStreamNext struct {
 // https://developers.ceramic.network/reference/typescript/interfaces/_ceramicnetwork_common.streamstate-1.html
 type CeramicStreamState struct {
 	AnchorProof *CeramicAnchorProof `json:"anchorProof,omitempty"`
-	// https://github.com/gitcoinco/dPopp/issues/247 violation of spec?
+	// BUG(ceramic) https://github.com/gitcoinco/dPopp/issues/247 violation of spec?
 	AnchorScheduledFor *string `json:"anchorScheduledFor,omitempty"`
 
 	// AnchorStatus not supoorted yet

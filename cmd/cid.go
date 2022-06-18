@@ -16,7 +16,7 @@ Subcommands in this category help interacting with cid.
 `,
 }
 
-// cidInspectCmd represents the cidInspect command
+// cidInspectCmd represents the 'cid inspect' command
 var cidInspectCmd = &cobra.Command{
 	Use:   "inspect",
 	Short: "Decode cid into a more user-friendly form",

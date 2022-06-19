@@ -29,12 +29,12 @@ Subcommands in this category help you inspect and validate your IDX document.`,
 // idxIdCmd represents the 'idx id' command
 var idxIdCmd = &cobra.Command{
 	Use:   "id",
-	Short: "Get your IDX document StreamID",
+	Short: "Get your IDX document StreamID from your DID",
 	Long: `
-Each Ceramic Stream has a StreamID, and the StreamID is computed from your
-DID such as pkh.
-
-The output is your StreamID.`,
+Each Ceramic Stream has a StreamID. Your IDX index StreamID is computed
+deterministically from your DID.  Different DID would result in different
+IDX index StreamID.
+`,
 }
 
 var (
@@ -45,12 +45,11 @@ var (
 // idxIdPkhCmd represents the 'idx id pkh' command
 var idxIdPkhCmd = &cobra.Command{
 	Use:   "pkh",
-	Short: "Get your IDX document StreamID using PKH",
+	Short: "Get IDX document StreamID using pkh DID method",
 	Long: `
-Each Ceramic Stream has a StreamID, and the StreamID is computed from your
-DID such as pkh.
+Compute your IDX index StreamID from pkh DID method.
 
-The output is your StreamID. You can use the StreamID with 'idx state' or
+The output is your StreamID. You can use the StreamID with 'streamid state' or
 'idx record' to inspect your records.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if pkhAccount == "" {
@@ -58,32 +57,6 @@ The output is your StreamID. You can use the StreamID with 'idx state' or
 		}
 		streamid := idx.StreamIDFromPKH(pkhChainId, pkhAccount)
 		fmt.Println(streamid)
-		return nil
-	},
-}
-
-// idxStateCmd represents the 'idx state' command
-var idxStateCmd = &cobra.Command{
-	Use:   "state [flags] <streamid>",
-	Short: "Get your IDX document state",
-	Long: `
-Each Ceramic Stream has a state.  The output is the state for your IDX document.
-`,
-	ArgAliases: []string{"streamid"},
-	Args:       cobra.MinimumNArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-		streamid := args[0]
-		api := ceramic.NewAPI()
-		response, err := api.GetStream(streamid)
-		if err != nil {
-			panic(err)
-		}
-
-		out, err := colorPrettyJson(response.State)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(string(out))
 		return nil
 	},
 }
@@ -118,30 +91,29 @@ as record.  You should be able to see what records you have in your IDX.
 
 		fmt.Printf("Showing %d available record(s)\n", len(content))
 		for definition, record := range content {
-			fmt.Printf("=> Inspecting %s -> %s\n", definition, record)
+			u, err := url.Parse(record)
+			if err != nil {
+				panic(err)
+			}
+			response, err := api.GetStream(u.Host)
+			if err != nil {
+				panic(err)
+			}
 			switch definition {
 			case GITCOIN_PASSPORT_DEFINITION:
-				fmt.Println("   Found GitCoin Passport record")
-				u, err := url.Parse(record)
-				if err != nil {
-					panic(err)
+				fmt.Printf("=> Found GitCoin Passport record at %s\n", record)
+				content := response.State.Content
+				if response.State.Next != nil {
+					content = *response.State.Next.Content
 				}
-				response, err := api.GetStream(u.Host)
-				if err != nil {
-					panic(err)
-				}
-				out, err := colorPrettyJson(response.State)
+				out, err := colorPrettyJson(content)
 				if err != nil {
 					panic(err)
 				}
 				fmt.Println(string(out))
 			default:
-				fmt.Printf("   Unknown record definition: %s\n", definition)
-				response, err := api.GetStream(definition)
-				if err != nil {
-					panic(err)
-				}
-				out, err := colorPrettyJson(response.State)
+				fmt.Printf("=> Found unknown record: %s\n", record)
+				out, err := colorPrettyJson(response.State.Content)
 				if err != nil {
 					panic(err)
 				}
@@ -157,7 +129,6 @@ func init() {
 	rootCmd.AddCommand(idxCmd)
 	idxCmd.AddCommand(idxIdCmd)
 	idxIdCmd.AddCommand(idxIdPkhCmd)
-	idxCmd.AddCommand(idxStateCmd)
 	idxCmd.AddCommand(idxRecordCmd)
 
 	idxIdPkhCmd.Flags().UintVar(&pkhChainId, "chainid", 1, "EIP-155 Chain ID to use for your identity")

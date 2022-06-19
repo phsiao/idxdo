@@ -13,7 +13,7 @@ import (
 // vcCmd represents the vc command
 var vcCmd = &cobra.Command{
 	Use:   "vc",
-	Short: "Perform Verifiable Credential operations on StreamID",
+	Short: "Perform Verifiable Credential operations on stdin or StreamID",
 	Long: `
 A StreamID may contain a Verifiable Credential and subcommands in this
 category can interact with them.

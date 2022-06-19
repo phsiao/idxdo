@@ -64,7 +64,7 @@ The output is your StreamID. You can use the StreamID with 'idx state' or
 
 // idxStateCmd represents the 'idx state' command
 var idxStateCmd = &cobra.Command{
-	Use:   "state",
+	Use:   "state [flags] <streamid>",
 	Short: "Get your IDX document state",
 	Long: `
 Each Ceramic Stream has a state.  The output is the state for your IDX document.
@@ -94,7 +94,7 @@ const (
 
 // idxRecordCmd represents the 'idx record' command
 var idxRecordCmd = &cobra.Command{
-	Use:   "record",
+	Use:   "record [flags] <streamid>",
 	Short: "Get your IDX idenity records",
 	Long: `
 Your GitCoin passport and other identity documents are stored in the IDX index

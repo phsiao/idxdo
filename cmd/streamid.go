@@ -19,7 +19,7 @@ StreamID is very opaque and this helps with interacting with it
 
 // streamidInspectCmd represents the streamid inspect command
 var streamidInspectCmd = &cobra.Command{
-	Use:   "inspect",
+	Use:   "inspect [flags] <streamid>",
 	Short: "Decode StreamID into a more user-friendly form",
 	Long: `
 StreamID is very opaque and this helps with decoding it
@@ -58,7 +58,7 @@ StreamID is very opaque and this helps with decoding it
 
 // streamidStateCmd represents the streamid state command
 var streamidStateCmd = &cobra.Command{
-	Use:   "state",
+	Use:   "state [flags] <streamid>",
 	Short: "Show StreamID's entire state",
 	Long: `
 Download and pretty print the state of a StreamID
@@ -84,7 +84,7 @@ Download and pretty print the state of a StreamID
 
 // streamidContentCmd represents the streamid content command
 var streamidContentCmd = &cobra.Command{
-	Use:   "content",
+	Use:   "content [flags] <streamid>",
 	Short: "Show StreamID's content",
 	Long: `
 Download and pretty print the content of a StreamID

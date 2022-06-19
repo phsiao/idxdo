@@ -18,7 +18,7 @@ Subcommands in this category help interacting with cid.
 
 // cidInspectCmd represents the 'cid inspect' command
 var cidInspectCmd = &cobra.Command{
-	Use:   "inspect",
+	Use:   "inspect [flags] <cid-to-inspect>",
 	Short: "Decode cid into a more user-friendly form",
 	Long: `
 CID is very powerful and this command helps you understanding it.
@@ -28,7 +28,7 @@ CID is very powerful and this command helps you understanding it.
 	RunE: func(cmd *cobra.Command, args []string) error {
 		out, err := cidinspect.ToHumanReadable(args[0])
 		if err != nil {
-			return err
+			panic(err)
 		}
 		fmt.Println(out)
 		return nil

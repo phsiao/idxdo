@@ -22,11 +22,14 @@ category can interact with them.
 
 // vcVerifyCmd represents the 'vc verify' command
 var vcVerifyCmd = &cobra.Command{
-	Use:   "verify",
+	Use:   "verify [flags] <streamid>",
 	Short: "Verify the Verifiable Credential in stdin or the specified StreamID",
 	Long: `
 A StreamID may contain a Verifiable Credential and subcommands in this
 category can interact with them.
+
+This command reads the Verifiable Credential in StreamID if it is specified via
+argument, or from stdin if no StreamID is given.
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var input []byte

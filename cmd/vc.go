@@ -40,25 +40,25 @@ argument, or from stdin if no StreamID is given.
 			// get document by StreamID
 			response, err := api.GetStream(streamid)
 			if err != nil {
-				return err
+				panic(err)
 			}
 			input = response.State.Content
 		} else {
 			bytes, err := ioutil.ReadAll(os.Stdin)
 			if err != nil {
-				return err
+				panic(err)
 			}
 			input = bytes
 		}
 
 		vc, err := did.VerifyVC(input)
 		if err != nil {
-			return err
+			panic(err)
 		}
 
 		out, err := colorPrettyJson(vc)
 		if err != nil {
-			return err
+			panic(err)
 		}
 		fmt.Println(string(out))
 		return nil

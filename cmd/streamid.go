@@ -38,7 +38,7 @@ StreamID is very opaque and this helps with decoding it
 			fmt.Println("Type: StreamID")
 			out, err := cidinspect.ToHumanReadable(obj.Entry.ContentID)
 			if err != nil {
-				return err
+				panic(err)
 			}
 			fmt.Printf("%s\n", out)
 		case ceramic.CommitID:
@@ -46,7 +46,7 @@ StreamID is very opaque and this helps with decoding it
 			for idx, entry := range obj.Entries {
 				out, err := cidinspect.ToHumanReadable(entry.ContentID)
 				if err != nil {
-					return err
+					panic(err)
 				}
 				fmt.Printf("%d: %s\n", idx, out)
 			}
@@ -70,12 +70,12 @@ Download and pretty print the state of a StreamID
 		api := ceramic.NewAPI()
 		response, err := api.GetStream(streamid)
 		if err != nil {
-			return err
+			panic(err)
 		}
 
 		out, err := colorPrettyJson(response.State)
 		if err != nil {
-			return err
+			panic(err)
 		}
 		fmt.Println(string(out))
 		return nil
@@ -96,12 +96,12 @@ Download and pretty print the content of a StreamID
 		api := ceramic.NewAPI()
 		response, err := api.GetStream(streamid)
 		if err != nil {
-			return err
+			panic(err)
 		}
 
 		out, err := colorPrettyJson(response.State.Content)
 		if err != nil {
-			return err
+			panic(err)
 		}
 		fmt.Println(string(out))
 		return nil

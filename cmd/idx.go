@@ -76,12 +76,12 @@ Each Ceramic Stream has a state.  The output is the state for your IDX document.
 		api := ceramic.NewAPI()
 		response, err := api.GetStream(streamid)
 		if err != nil {
-			return err
+			panic(err)
 		}
 
 		out, err := colorPrettyJson(response.State)
 		if err != nil {
-			return err
+			panic(err)
 		}
 		fmt.Println(string(out))
 		return nil
@@ -107,13 +107,13 @@ as record.  You should be able to see what records you have in your IDX.
 		api := ceramic.NewAPI()
 		response, err := api.GetStream(streamid)
 		if err != nil {
-			return err
+			panic(err)
 		}
 
 		content := map[string]string{}
 		err = json.Unmarshal(response.State.Content, &content)
 		if err != nil {
-			return err
+			panic(err)
 		}
 
 		fmt.Printf("Showing %d available record(s)\n", len(content))
@@ -124,26 +124,26 @@ as record.  You should be able to see what records you have in your IDX.
 				fmt.Println("   Found GitCoin Passport record")
 				u, err := url.Parse(record)
 				if err != nil {
-					return err
+					panic(err)
 				}
 				response, err := api.GetStream(u.Host)
 				if err != nil {
-					return err
+					panic(err)
 				}
 				out, err := colorPrettyJson(response.State)
 				if err != nil {
-					return err
+					panic(err)
 				}
 				fmt.Println(string(out))
 			default:
 				fmt.Printf("   Unknown record definition: %s\n", definition)
 				response, err := api.GetStream(definition)
 				if err != nil {
-					return err
+					panic(err)
 				}
 				out, err := colorPrettyJson(response.State)
 				if err != nil {
-					return err
+					panic(err)
 				}
 				fmt.Println(string(out))
 			}

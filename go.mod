@@ -4,6 +4,8 @@ go 1.17
 
 require (
 	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2
+	github.com/hyperledger/aries-framework-go v0.1.8
+	github.com/hyperledger/aries-framework-go/component/storageutil v0.0.0-20220617141911-82112d172a78
 	github.com/ipfs/go-cid v0.2.0
 	github.com/ipld/go-ipld-prime v0.17.0
 	github.com/multiformats/go-multibase v0.0.3
@@ -25,8 +27,6 @@ require (
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/hokaccha/go-prettyjson v0.0.0-20211117102719-0474bc63780f // indirect
-	github.com/hyperledger/aries-framework-go v0.1.8 // indirect
-	github.com/hyperledger/aries-framework-go/component/storageutil v0.0.0-20220617141911-82112d172a78 // indirect
 	github.com/hyperledger/aries-framework-go/spi v0.0.0-20220322085443-50e8f9bd208b // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect

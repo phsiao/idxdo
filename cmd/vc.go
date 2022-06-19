@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/hyperledger/aries-framework-go/component/storageutil/mem"
@@ -63,16 +65,30 @@ func getJSONLDLoader() (*ld.DocumentLoader, error) {
 // vcVerifyCmd represents the 'vc verify' command
 var vcVerifyCmd = &cobra.Command{
 	Use:   "verify",
-	Short: "Verify the Verifiable Credential in the StreamID",
+	Short: "Verify the Verifiable Credential in stdin or the specified StreamID",
 	Long: `
 A StreamID may contain a Verifiable Credential and subcommands in this
 category can interact with them.
 `,
-	ArgAliases: []string{"cid"},
-	Args:       cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		streamid := args[0]
-		api := ceramic.NewAPI()
+		var input []byte
+		if len(args) > 0 {
+			streamid := args[0]
+			api := ceramic.NewAPI()
+
+			// get document by StreamID
+			response, err := api.GetStream(streamid)
+			if err != nil {
+				return err
+			}
+			input = response.State.Content
+		} else {
+			bytes, err := ioutil.ReadAll(os.Stdin)
+			if err != nil {
+				return err
+			}
+			input = bytes
+		}
 
 		// build loader
 		loader, err := getJSONLDLoader()
@@ -80,15 +96,9 @@ category can interact with them.
 			return err
 		}
 
-		// get document by StreamID
-		response, err := api.GetStream(streamid)
-		if err != nil {
-			return err
-		}
-
 		// parse the document without proof check first, so we can
 		// extract the issuer and verification method
-		nvc, err := verifiable.ParseCredential(response.State.Content,
+		nvc, err := verifiable.ParseCredential(input,
 			verifiable.WithDisabledProofCheck(),
 			verifiable.WithJSONLDDocumentLoader(loader))
 		if err != nil {
@@ -127,14 +137,14 @@ category can interact with them.
 		}
 
 		// verify the proof of the document
-		_, err = verifiable.ParseCredential(response.State.Content,
+		vc, err := verifiable.ParseCredential(input,
 			verifiable.WithPublicKeyFetcher(verifiable.SingleKey(pubkey, kms.ED25519)),
 			verifiable.WithJSONLDDocumentLoader(loader))
 		if err != nil {
 			return err
 		}
 
-		out, err := colorPrettyJson(response.State.Content)
+		out, err := colorPrettyJson(vc)
 		if err != nil {
 			return err
 		}

@@ -22,8 +22,8 @@ func ToHumanReadable(input string) (string, error) {
 	}
 
 	prefix := parsed.Prefix()
-	return fmt.Sprintf("cid[v%x %s(0x%x) %s(0x%x) len=%d] %x",
+	return fmt.Sprintf("cid([v%x %s(0x%x) %s(0x%x) len=%d] %x) = %s",
 		prefix.Version, multicodec.Code(prefix.Codec).String(), prefix.Codec,
 		multicodec.Code(prefix.MhType).String(), prefix.MhType, prefix.MhLength,
-		decoded.Digest), nil
+		decoded.Digest, input), nil
 }

@@ -13,10 +13,24 @@ type API struct {
 	root   string
 }
 
-func NewAPI() API {
-	return API{
+type Opt func(api *API) *API
+
+func NewAPI(opts ...Opt) API {
+	api := API{
 		host:   MAINNET_COMMUNITY_CERAMIC_ENDPOINT,
 		scheme: "https",
 		root:   "",
+	}
+	for _, opt := range opts {
+		opt(&api)
+	}
+
+	return api
+}
+
+func WithHost(host string) Opt {
+	return func(api *API) *API {
+		api.host = host
+		return api
 	}
 }

@@ -34,7 +34,17 @@ would install the command `idxdo` in your `$GOPATH/bin`.
 
 ## Usage
 
-### Example: GitCoin Passport
+### Example: GitCoin Passport backup
+
+### Example: GitCoin Passport data walk through
+
+```
+$ idxdo gp dump <your etherum address starts with 0x...>
+```
+
+Would try to download and dump the passport document to stdout.
+
+You can then make a copy of it.
 
 #### Get your IDX StreamID
 

@@ -20,7 +20,7 @@ var gpCmd = &cobra.Command{
 	Use:   "gp",
 	Short: "Gitcoin passport utility command category",
 	Long: `
-Gitcoin passport utility command category.
+Gitcoin Passport utility command category.
 `,
 }
 

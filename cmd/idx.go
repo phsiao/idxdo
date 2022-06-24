@@ -70,7 +70,7 @@ var idxRecordCmd = &cobra.Command{
 	Use:   "record [flags] <streamid>",
 	Short: "Get your IDX idenity records",
 	Long: `
-Your Gitcoin passport and other identity documents are stored in the IDX index
+Your Gitcoin Passport and other identity documents are stored in the IDX index
 as record.  You should be able to see what records you have in your IDX.
 `,
 	ArgAliases: []string{"streamid"},

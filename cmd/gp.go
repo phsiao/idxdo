@@ -18,9 +18,9 @@ import (
 // gpCmd represents the gp command
 var gpCmd = &cobra.Command{
 	Use:   "gp",
-	Short: "GitCoin passport utilities",
+	Short: "Gitcoin passport utility command category",
 	Long: `
-GitCoin passport utility commands.
+Gitcoin passport utility command category.
 `,
 }
 
@@ -29,7 +29,7 @@ type Stamp struct {
 	Credential json.RawMessage
 }
 
-type GitCoinPassport struct {
+type GitcoinPassport struct {
 	ExpiryDate   string  `json:"expiryDate"`
 	IssuanceDate string  `json:"issuanceDate"`
 	Stamps       []Stamp `json:"stamps"`
@@ -38,9 +38,13 @@ type GitCoinPassport struct {
 // gpDumpCmd represents the 'gp backup' command
 var gpDumpCmd = &cobra.Command{
 	Use:   "dump [flags] account",
-	Short: "GitCoin passport utilities",
+	Short: "Dump the content of the account's Gitcoin Passport",
 	Long: `
-GitCoin passport utility commands.
+Dump the content of the account's Gitcoin Passport.  The output of
+this command is a JSON document contains stamps in the format of
+Verifiable Credential that are signed by Gitcoin Passport.
+
+Gitcoin
 `,
 	ArgAliases: []string{"account"},
 	Args:       cobra.MinimumNArgs(1),
@@ -70,12 +74,12 @@ GitCoin passport utility commands.
 			}
 			switch definition {
 			case GITCOIN_PASSPORT_DEFINITION:
-				// fmt.Printf("=> Found GitCoin Passport record at %s\n", record)
+				// fmt.Printf("=> Found Gitcoin Passport record at %s\n", record)
 				content := response.State.Content
 				if response.State.Next != nil {
 					content = *response.State.Next.Content
 				}
-				passport := GitCoinPassport{}
+				passport := GitcoinPassport{}
 				err = json.Unmarshal(content, &passport)
 				if err != nil {
 					panic(err)

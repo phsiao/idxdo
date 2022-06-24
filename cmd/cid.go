@@ -10,22 +10,26 @@ import (
 // cidCmd represents the cid command
 var cidCmd = &cobra.Command{
 	Use:   "cid",
-	Short: "cid command category",
+	Short: "CID utility command category",
 	Long: `
-Subcommands in this category help interacting with cid.
+CID is very powerful and this command helps you understanding it.
+Commands in this category help interacting with cid.
 `,
 }
 
 // cidInspectCmd represents the 'cid inspect' command
 var cidInspectCmd = &cobra.Command{
 	Use:   "inspect [flags] <cid-to-inspect>",
-	Short: "Decode cid into a more user-friendly form",
+	Short: "Decode CID into a more user-friendly form",
 	Long: `
-CID is very powerful and this command helps you understanding it.
+Decode CID into a more user-friendly form.
 `,
 	ArgAliases: []string{"cid"},
 	Args:       cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		if !cidinspect.IsCID(args[0]) {
+			return fmt.Errorf("argument %s is not a valid CID", args[0])
+		}
 		out, err := cidinspect.ToHumanReadable(args[0])
 		if err != nil {
 			panic(err)

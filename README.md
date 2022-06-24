@@ -34,7 +34,7 @@ would install the command `idxdo` in your `$GOPATH/bin`.
 
 ## Usage
 
-### Example: GitCoin Passport backup
+### Example: Gitcoin Passport backup
 
 ```
 $ idxdo gp dump <your etherum address starts with 0x...>
@@ -44,11 +44,11 @@ Would try to download and dump the passport document to stdout.
 
 You can then make a copy of it.
 
-### Example: GitCoin Passport data walk through
+### Example: Gitocin Passport data walk through
 
 #### Get your IDX StreamID
 
-GitCoin Passport uses the PKH method for DID. So you first need to compute the
+Gitcoin Passport uses the PKH method for DID. So you first need to compute the
 IDX index StreamID for your DID. For example,
 
 ```
@@ -72,7 +72,7 @@ idxdo idx state <your StreamID from previous step>
 The `content` secion of the output json is the list of your identity documents
 by their key/value pairs. The key
 `kjzl6cwe1jw148h1e14jb5fkf55xmqhmyorp29r9cq356c7ou74ulowf8czjlzs` is used to
-indicate GitCoin Passport, and the value represents GitCoin Passport document
+indicate Gitcoin Passport, and the value represents Gitcoin Passport document
 that is associated with this identity.
 
 #### Show your identity document

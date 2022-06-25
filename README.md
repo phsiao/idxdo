@@ -34,14 +34,14 @@ would install the command `idxdo` in your `$GOPATH/bin`.
 
 ## Usage
 
-### Example: Gitcoin Passport backup
+### Example: Back up a Gitcoin Passport
 
 ---
 
 Gitcoin Passport issues stamps for identities that they can verify about you,
 such as your Facebook user id, Gmail email address, and Twitter handle. Gitcoin
-then calculates trust score from the stamps --- it would filter out stamps that
-share the same external identities with other Gitcoin Passports to mitigate
+then calculates Trust Bonus score from the stamps --- it would filter out stamps
+that share the same external identities with other Gitcoin Passports to mitigate
 obvious Syble attacks.
 
 The Passport document is stored in a Ceramic stream contains links to stamps
@@ -55,6 +55,9 @@ and if the verifiers trust Gitcoin then they might be able to trust you to have
 those identities without asking you to prove it to them again. Note that the
 stamp does not reveal your identity in other community, just that you have an
 identity that Gitcoin was able to verify.
+
+Gitcoin Passport data is composable because it allows other dapps to pull the
+stamps to verify your identity and derive a personhood score on their own.
 
 Executing the command below would try to download and dump the Gitcoin Passport
 document to stdout. You can back up your Passport and inspect what stamps

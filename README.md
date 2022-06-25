@@ -84,7 +84,8 @@ k2t6wyfsu4pg062qh6tvm5zkb3qe6e7i59s592zrl4knu0vb7ykz0s18g5i5pv
 
 `k2t6wyfsu4pg062qh6tvm5zkb3qe6e7i59s592zrl4knu0vb7ykz0s18g5i5pv` is the StreamID
 associated with account `0x6C1e268Fd076B5EaD3774F26D65f21A21D369179` using PKH
-method.
+method. To get the IDX StreamID of the account that you are interested in,
+replace the `--account` argument with the account that you are interested in.
 
 Different IDX streams can use differnet DID methods, for example, `3id` and
 `key` are two other DID methods that are supported and used by other dapps as
@@ -126,7 +127,7 @@ for you. Currently `idxdo` only interprets Gitcoin Passport.
 Stream state and its content. Use `-h` or `--help` to show usage at different
 category of the CLI.
 
-## Other alternatives
+## Alternatives
 
 [cerscan](https://cerscan.com/) by the Orbis team is a web application allowing
 you to query streams that they have indexed. It is also a very useful tool to

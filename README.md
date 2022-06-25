@@ -20,9 +20,9 @@ to archive any record that are interesting to them and be able to prove its
 validity.
 
 `idxdo` is a CLI tool that aims to reduce the complexity of interacting with IDX
-records, and provides an independent way to verify and validate records
-published. `idxdo` does not depend on any code or library from `IDX` or
-`Ceramic` projects.
+records, and provides an independent way to verify and validate published
+records. `idxdo` does not depend on any code or library from `IDX` or `Ceramic`
+projects.
 
 ## Installation
 
@@ -38,25 +38,31 @@ would install the command `idxdo` in your `$GOPATH/bin`.
 
 ---
 
-Gitcoin Passport issues stamps for identities that they can verify about you.
-Gitcoin can calculate trust score from the stamps. The Passport document is a
-Ceramic stream contains stamps that are in Verifiable Credential format. Your
-Passport document is linked to an IDX index that is created from your Ethereum
-address.
+Gitcoin Passport issues stamps for identities that they can verify about you,
+such as your Facebook user id, Gmail email address, and Twitter handle. Gitcoin
+then calculates trust score from the stamps --- it would filter out stamps that
+share the same external identities with other Gitcoin Passports to mitigate
+obvious Syble attacks.
 
-So knowing an Ethereum address would allow anyone to retrieve their Gitcoin
-Passport document. The document can then be backed up or send to another relying
-party if they trust Gitcoin to verify and sign those stamps correctly.
+The Passport document is stored in a Ceramic stream contains links to stamps
+that are in Verifiable Credential format. Your Passport document is linked from
+an IDX index that is created from your Ethereum address.
+
+So knowing an Ethereum address would allow anyone to retrieve its Gitcoin
+Passport document if it has one. The document can then be backed up. You can
+also use it as a proof that you have identities that are verified by Gitcoin,
+and if the verifiers trust Gitcoin then they might be able to trust you to have
+those identities without asking you to prove it to them again. Note that the
+stamp does not reveal your identity in other community, just that you have an
+identity that Gitcoin was able to verify.
 
 Executing the command below would try to download and dump the Gitcoin Passport
-document to stdout. You can download your Passport for backup and to know what
-stamps Gitcoin have issued to you.
+document to stdout. You can back up your Passport and inspect what stamps
+Gitcoin have issued to you.
 
 ```
 $ idxdo gp dump <your etherum address starts with 0x...>
 ```
-
-You can then make a copy of it.
 
 ### Example: Gitocin Passport data walk through
 
@@ -81,9 +87,9 @@ associated with account `0x6C1e268Fd076B5EaD3774F26D65f21A21D369179` using PKH
 method.
 
 Different IDX streams can use differnet DID methods, for example, `3id` and
-`key` are two other DID methods that are supported and used as identity in IDX.
-`idxdo` currently only support PKH method but can be extended to support other
-methods.
+`key` are two other DID methods that are supported and used by other dapps as
+identity in IDX. `idxdo` currently only support PKH method but can be extended
+to support other methods.
 
 #### Get your IDX Index
 
@@ -94,10 +100,10 @@ executing
 $ idxdo idx state <your IDX StreamID from previous step>
 ```
 
-The `content` secion of the output json is the list of your identity documents
+The `content` secion of the json output is the list of your identity documents
 by their key/value pairs. The key
 `kjzl6cwe1jw148h1e14jb5fkf55xmqhmyorp29r9cq356c7ou74ulowf8czjlzs` is used to
-indicate that the linked document is a Gitcoin Passport associated with the IDX
+indicate that the linked document is a Gitcoin Passport associated with the
 identity.
 
 The record value starts with `ceramic://` and for querying StreamID using
@@ -111,8 +117,14 @@ You can run
 $ idxdo idx record <your IDX StreamID from previous step>
 ```
 
-to go through the `content` of the index and let `idxdo` interpret what
-documents they are for you. Currently `idxdo` only interprets Gitcoin Passport.
+to go through the `content` of the index and let `idxdo` interpret what they are
+for you. Currently `idxdo` only interprets Gitcoin Passport.
+
+### Inspect CID, StreamID, and Stream State/Content
+
+`idxdo` also has command to help you understand CID, StreamID, and inspect
+Stream state and its content. Use `-h` or `--help` to show usage at different
+category of the CLI.
 
 ## Other alternatives
 

@@ -85,10 +85,11 @@ $ idxdo idx id pkh --account 0x6C1e268Fd076B5EaD3774F26D65f21A21D369179
 k2t6wyfsu4pg062qh6tvm5zkb3qe6e7i59s592zrl4knu0vb7ykz0s18g5i5pv
 ```
 
-`k2t6wyfsu4pg062qh6tvm5zkb3qe6e7i59s592zrl4knu0vb7ykz0s18g5i5pv` is the StreamID
-associated with account `0x6C1e268Fd076B5EaD3774F26D65f21A21D369179` using PKH
-method. To get the IDX StreamID of the account that you are interested in,
-replace the `--account` argument with the account that you are interested in.
+`k2t6wyfsu4pg062qh6tvm5zkb3qe6e7i59s592zrl4knu0vb7ykz0s18g5i5pv` is the IDX
+StreamID associated with account `0x6C1e268Fd076B5EaD3774F26D65f21A21D369179`
+using PKH method. To get the IDX StreamID of the account that you are interested
+in, replace the `--account` argument with the account that you are interested
+in.
 
 Different IDX streams can use differnet DID methods, for example, `3id` and
 `key` are two other DID methods that are supported and used by other dapps as
@@ -97,8 +98,8 @@ to support other methods.
 
 #### Get your IDX Index
 
-After you have your IDX index StreamID you can then get the document by
-executing
+After you have your IDX index StreamID you can then get the IDX index document
+by executing
 
 ```
 $ idxdo idx state <your IDX StreamID from previous step>
@@ -122,7 +123,7 @@ $ idxdo idx record <your IDX StreamID from previous step>
 ```
 
 to go through the `content` of the index and let `idxdo` interpret what they are
-for you. Currently `idxdo` only interprets Gitcoin Passport.
+for you. Currently `idxdo` only interprets Gitcoin Passport document.
 
 ### Inspect CID, StreamID, and Stream State/Content
 

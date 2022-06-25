@@ -61,7 +61,7 @@ document to stdout. You can back up your Passport and inspect what stamps
 Gitcoin have issued to you.
 
 ```
-$ idxdo gp dump <your etherum address starts with 0x...>
+$ idxdo gp dump --account <your etherum address starts with 0x...>
 ```
 
 ### Example: Gitocin Passport data walk through

@@ -34,6 +34,8 @@ var idxIdCmd = &cobra.Command{
 Each Ceramic Stream has a StreamID. Your IDX index StreamID is computed
 deterministically from your DID.  Different DID would result in different
 IDX index StreamID.
+
+The supported DID methods are implemented using subcommands in this category.
 `,
 }
 

@@ -55,6 +55,9 @@ The output is your StreamID. You can use the StreamID with 'streamid state' or
 		if pkhAccount == "" {
 			return fmt.Errorf("please provides an account using --account")
 		}
+		if !IsEthereumAccount(pkhAccount) {
+			return fmt.Errorf("argument %s is not a valid account", pkhAccount)
+		}
 		streamid := idx.StreamIDFromPKH(pkhChainId, pkhAccount)
 		fmt.Println(streamid)
 		return nil

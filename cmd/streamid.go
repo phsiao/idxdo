@@ -27,6 +27,9 @@ StreamID is very opaque and this helps with decoding it
 	ArgAliases: []string{"streamid"},
 	Args:       cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		if !ceramic.IsStreamID(args[0]) {
+			return fmt.Errorf("argument %s is not a valid StreamID", args[0])
+		}
 		streamid := args[0]
 
 		id, err := ceramic.Decode(streamid)
@@ -66,6 +69,9 @@ Download and pretty print the state of a StreamID
 	ArgAliases: []string{"streamid"},
 	Args:       cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		if !ceramic.IsStreamID(args[0]) {
+			return fmt.Errorf("argument %s is not a valid StreamID", args[0])
+		}
 		streamid := args[0]
 		api := ceramic.NewAPI()
 		response, err := api.GetStream(streamid)
@@ -92,6 +98,9 @@ Download and pretty print the content of a StreamID
 	ArgAliases: []string{"streamid"},
 	Args:       cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		if !ceramic.IsStreamID(args[0]) {
+			return fmt.Errorf("argument %s is not a valid StreamID", args[0])
+		}
 		streamid := args[0]
 		api := ceramic.NewAPI()
 		response, err := api.GetStream(streamid)

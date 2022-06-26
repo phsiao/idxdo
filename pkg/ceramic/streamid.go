@@ -120,6 +120,11 @@ func Decode(id string) (interface{}, error) {
 			Entries: entries,
 			Common:  sid,
 		}, nil
-
 	}
+}
+
+// IsStreamID returns whether the given input is a valid StreamID
+func IsStreamID(input string) bool {
+	_, err := Decode(input)
+	return err == nil
 }

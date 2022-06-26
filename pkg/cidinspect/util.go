@@ -22,8 +22,14 @@ func ToHumanReadable(input string) (string, error) {
 	}
 
 	prefix := parsed.Prefix()
-	return fmt.Sprintf("cid([v%x %s(0x%x) %s(0x%x) len=%d] %x) = %s",
+	return fmt.Sprintf("cid([version=%x codec=%s(0x%x) hash-type=%s(0x%x) hash-len=%d]\n    hash=%x)\n= %s\n",
 		prefix.Version, multicodec.Code(prefix.Codec).String(), prefix.Codec,
 		multicodec.Code(prefix.MhType).String(), prefix.MhType, prefix.MhLength,
 		decoded.Digest, input), nil
+}
+
+// IsCID returns whether the input string is a CID
+func IsCID(input string) bool {
+	_, err := ToHumanReadable(input)
+	return err == nil
 }

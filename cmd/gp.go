@@ -18,9 +18,9 @@ import (
 // gpCmd represents the gp command
 var gpCmd = &cobra.Command{
 	Use:   "gp",
-	Short: "GitCoin passport utilities",
+	Short: "Gitcoin passport utility command category",
 	Long: `
-GitCoin passport utility commands.
+Gitcoin Passport utility command category.
 `,
 }
 
@@ -29,7 +29,7 @@ type Stamp struct {
 	Credential json.RawMessage
 }
 
-type GitCoinPassport struct {
+type GitcoinPassport struct {
 	ExpiryDate   string  `json:"expiryDate"`
 	IssuanceDate string  `json:"issuanceDate"`
 	Stamps       []Stamp `json:"stamps"`
@@ -37,15 +37,31 @@ type GitCoinPassport struct {
 
 // gpDumpCmd represents the 'gp backup' command
 var gpDumpCmd = &cobra.Command{
-	Use:   "dump [flags] account",
-	Short: "GitCoin passport utilities",
+	Use:   "dump",
+	Short: "Dump the content of the account's Gitcoin Passport",
 	Long: `
-GitCoin passport utility commands.
+Dump the content of the account's Gitcoin Passport.  The output of
+this command is a JSON document contains stamps in the format of
+Verifiable Credential that are signed by Gitcoin Passport.
+
+Gitcoin stamps contains a hash of your verified identity with a
+secret key, so anyone can see if two stamps are issued to the same
+verified identity but no one can see what is the verified identity.
+If you know the Gitcoin Passport private key and the identity you
+can check if it matches the hash.
+
+Gitcoin stamps are also signed using Gitcoin Passport's key
+(did:key:z6MkghvGHLobLEdj1bgRLhS4LPGJAvbMA1tn2zcRyqmYU5LC) and can
+be validated by anyone.
 `,
-	ArgAliases: []string{"account"},
-	Args:       cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		idxStreamid := idx.StreamIDFromPKH(1, args[0])
+		if pkhAccount == "" {
+			return fmt.Errorf("please provides an account using --account")
+		}
+		if !IsEthereumAccount(pkhAccount) {
+			return fmt.Errorf("argument %s is not a valid account", pkhAccount)
+		}
+		idxStreamid := idx.StreamIDFromPKH(pkhChainId, pkhAccount)
 		api := ceramic.NewAPI(ceramic.WithHost(ceramic.GITCOIN_PASSPORT_CERAMIC_ENDPOINT))
 		response, err := api.GetStream(idxStreamid)
 		if err != nil {
@@ -70,12 +86,12 @@ GitCoin passport utility commands.
 			}
 			switch definition {
 			case GITCOIN_PASSPORT_DEFINITION:
-				// fmt.Printf("=> Found GitCoin Passport record at %s\n", record)
+				// fmt.Printf("=> Found Gitcoin Passport record at %s\n", record)
 				content := response.State.Content
 				if response.State.Next != nil {
 					content = *response.State.Next.Content
 				}
-				passport := GitCoinPassport{}
+				passport := GitcoinPassport{}
 				err = json.Unmarshal(content, &passport)
 				if err != nil {
 					panic(err)
@@ -106,4 +122,7 @@ GitCoin passport utility commands.
 func init() {
 	rootCmd.AddCommand(gpCmd)
 	gpCmd.AddCommand(gpDumpCmd)
+
+	gpDumpCmd.Flags().UintVar(&pkhChainId, "chainid", 1, "EIP-155 Chain ID to use for your identity")
+	gpDumpCmd.Flags().StringVar(&pkhAccount, "account", "", "Account to use for your identity")
 }

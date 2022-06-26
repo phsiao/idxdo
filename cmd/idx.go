@@ -19,7 +19,7 @@ var idxCmd = &cobra.Command{
 	Use:   "idx",
 	Short: "Inspect and validate your IDX document",
 	Long: `
-IDX is the directory that identity records such as GitCoin Passport are stored,
+IDX is the directory that identity records such as Gitcoin Passport are stored,
 and you need it to find your Passport and other identity documents, so you
 should be able to inspect and validate your IDX document.
 	
@@ -34,6 +34,8 @@ var idxIdCmd = &cobra.Command{
 Each Ceramic Stream has a StreamID. Your IDX index StreamID is computed
 deterministically from your DID.  Different DID would result in different
 IDX index StreamID.
+
+The supported DID methods are implemented using subcommands in this category.
 `,
 }
 
@@ -55,6 +57,9 @@ The output is your StreamID. You can use the StreamID with 'streamid state' or
 		if pkhAccount == "" {
 			return fmt.Errorf("please provides an account using --account")
 		}
+		if !IsEthereumAccount(pkhAccount) {
+			return fmt.Errorf("argument %s is not a valid account", pkhAccount)
+		}
 		streamid := idx.StreamIDFromPKH(pkhChainId, pkhAccount)
 		fmt.Println(streamid)
 		return nil
@@ -70,12 +75,16 @@ var idxRecordCmd = &cobra.Command{
 	Use:   "record [flags] <streamid>",
 	Short: "Get your IDX idenity records",
 	Long: `
-Your GitCoin passport and other identity documents are stored in the IDX index
+Your Gitcoin Passport and other identity documents are stored in the IDX index
 as record.  You should be able to see what records you have in your IDX.
 `,
 	ArgAliases: []string{"streamid"},
 	Args:       cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		if !ceramic.IsStreamID(args[0]) {
+			return fmt.Errorf("argument %s is not a valid StreamID", args[0])
+		}
+
 		streamid := args[0]
 		api := ceramic.NewAPI()
 		response, err := api.GetStream(streamid)
@@ -101,7 +110,7 @@ as record.  You should be able to see what records you have in your IDX.
 			}
 			switch definition {
 			case GITCOIN_PASSPORT_DEFINITION:
-				fmt.Printf("=> Found GitCoin Passport record at %s\n", record)
+				fmt.Printf("=> Found Gitcoin Passport record at %s\n", record)
 				content := response.State.Content
 				if response.State.Next != nil {
 					content = *response.State.Next.Content

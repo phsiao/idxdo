@@ -1,6 +1,6 @@
 # idxdo
 
-`idxdo` is a a CLI tool for interacting with
+`idxdo` is a CLI tool for interacting with
 [`IDX`](https://developers.idx.xyz/learn/overview/), an identity protocol for
 open applications.
 
@@ -15,7 +15,7 @@ Interacting with the records in `Ceramic` is non-trivial --- there is no
 official web portal that you can go to to get all your records and look up
 others' records. What is more important is that, a decentralized system should
 allow any participant to verify and validate the records themselves. Because
-these records are owned by the partcipants of the system, anyone should be able
+these records are owned by the participants of the system, anyone should be able
 to archive any record that are interesting to them and be able to prove its
 validity.
 
@@ -61,7 +61,7 @@ stamps to verify your identity and derive a personhood score on their own.
 
 Executing the command below would try to download and dump the Gitcoin Passport
 document to stdout. You can back up your Passport and inspect what stamps
-Gitcoin have issued to you.
+Gitcoin has issued to you.
 
 ```
 $ idxdo gp dump --account <your etherum address starts with 0x...>
@@ -87,11 +87,11 @@ k2t6wyfsu4pg062qh6tvm5zkb3qe6e7i59s592zrl4knu0vb7ykz0s18g5i5pv
 
 `k2t6wyfsu4pg062qh6tvm5zkb3qe6e7i59s592zrl4knu0vb7ykz0s18g5i5pv` is the IDX
 StreamID associated with account `0x6C1e268Fd076B5EaD3774F26D65f21A21D369179`
-using PKH method. To get the IDX StreamID of the account that you are interested
-in, replace the `--account` argument with the account that you are interested
-in.
+using the PKH method. To get the IDX StreamID of the account that you are
+interested in, replace the `--account` argument with the account that you are
+interested in.
 
-Different IDX streams can use differnet DID methods, for example, `3id` and
+Different IDX streams can use different DID methods, for example, `3id` and
 `key` are two other DID methods that are supported and used by other dapps as
 identity in IDX. `idxdo` currently only support PKH method but can be extended
 to support other methods.
@@ -109,13 +109,13 @@ Your IDX stream, represented by that IDX StreamID, contains metadata and history
 of its changes. These metadata allows access control and version control to take
 place in a decentralized environment.
 
-You can authorize a dapp to make change to your IDX stream on your behalf. For
+You can authorize a dapp to make changes to your IDX stream on your behalf. For
 example, Gitcoin would ask you to sign a text using your wallet to grant it
 permission to change your Cermaic stream on your behalf to create passport
-document and inserting stamps into it. You can read more about how it works
+document and insert stamps into it. You can read more about how it works
 [here](https://blog.ceramic.network/capability-based-data-security-on-ceramic/).
 
-The `content` secion of the json output is the list of your identity documents
+The `content` section of the json output is the list of your identity documents
 by their key/value pairs. The key
 `kjzl6cwe1jw148h1e14jb5fkf55xmqhmyorp29r9cq356c7ou74ulowf8czjlzs` is used to
 indicate that the linked document is a Gitcoin Passport associated with the
@@ -133,7 +133,7 @@ $ idxdo idx record <your IDX StreamID from previous step>
 ```
 
 to go through the `content` of the index and let `idxdo` interpret what they are
-for you. Currently `idxdo` only interprets Gitcoin Passport document.
+for you. Currently `idxdo` only interprets Gitcoin Passport documents.
 
 ### Inspect CID, StreamID, and Stream State/Content
 

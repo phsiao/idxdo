@@ -42,7 +42,7 @@ Gitcoin Passport issues stamps for identities that they can verify about you,
 such as your Facebook user id, Gmail email address, and Twitter handle. Gitcoin
 then calculates Trust Bonus score from the stamps --- it would filter out stamps
 that share the same external identities with other Gitcoin Passports to mitigate
-obvious Syble attacks.
+obvious Sybil attacks.
 
 The Passport document is stored in a Ceramic stream contains links to stamps
 that are in Verifiable Credential format. Your Passport document is linked from

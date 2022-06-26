@@ -102,8 +102,18 @@ After you have your IDX index StreamID you can then get the IDX index document
 by executing
 
 ```
-$ idxdo idx state <your IDX StreamID from previous step>
+$ idxdo streamid state <your IDX StreamID from previous step>
 ```
+
+Your IDX stream, represented by that IDX StreamID, contains metadata and history
+of its changes. These metadata allows access control and version control to take
+place in a decentralized environment.
+
+You can authorize a dapp to make change to your IDX stream on your behalf. For
+example, Gitcoin would ask you to sign a text using your wallet to grant it
+permission to change your Cermaic stream on your behalf to create passport
+document and inserting stamps into it. You can read more about how it works
+[here](https://blog.ceramic.network/capability-based-data-security-on-ceramic/).
 
 The `content` secion of the json output is the list of your identity documents
 by their key/value pairs. The key
@@ -111,8 +121,8 @@ by their key/value pairs. The key
 indicate that the linked document is a Gitcoin Passport associated with the
 identity.
 
-The record value starts with `ceramic://` and for querying StreamID using
-`idxdo` you need to remove the scheme and prefix.
+The record value starts with `ceramic://` to indicate that the linked document
+is stored in Ceramic.
 
 #### Show your identity document
 
@@ -133,6 +143,6 @@ category of the CLI.
 
 ## Alternatives
 
-[cerscan](https://cerscan.com/) by the Orbis team is a web application allowing
-you to query streams that they have indexed. It is also a very useful tool to
-learn about IDX, Ceramic, and Gitcoin Passport.
+[cerscan](https://cerscan.com/) by the [Orbis team](https://orbis.club/) is a
+web application allowing you to query streams that they have indexed. It is also
+a very useful tool for learning about IDX, Ceramic, and Gitcoin Passport.
